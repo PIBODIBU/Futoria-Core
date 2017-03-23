@@ -6,8 +6,8 @@ import com.futoria.core.model.User;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 
-@Component
-public class CustomSecurityService {
+@Component("CoreSecurityService")
+public class FutoriaSecurityService {
     public boolean hasPermission(String permission) {
         CustomUserDetails userDetails = ((CustomUserDetails) SecurityContextHolder
                 .getContext()
@@ -26,5 +26,12 @@ public class CustomSecurityService {
         return false;
     }
 
+    public User getUserFromContext() {
+        return ((CustomUserDetails) SecurityContextHolder
+                .getContext()
+                .getAuthentication()
+                .getPrincipal())
+                .getUser();
+    }
 }
 

@@ -3,6 +3,7 @@ package com.futoria.core.application.configuration.security;
 import com.futoria.core.model.Role;
 import com.futoria.core.model.User;
 import com.futoria.core.repository.UserRepository;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.dao.DataAccessException;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -18,7 +19,8 @@ import java.util.Set;
 public class UserDetailsServiceImpl implements UserDetailsService {
     private UserRepository userRepository;
 
-    public UserDetailsServiceImpl(UserRepository userRepository) {
+    public UserDetailsServiceImpl(@Qualifier("CoreUserRepository")
+                                          UserRepository userRepository) {
         this.userRepository = userRepository;
     }
 

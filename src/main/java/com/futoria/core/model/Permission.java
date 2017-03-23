@@ -13,8 +13,12 @@ public class Permission {
     @Column(name = "name")
     private String name;
 
-    @ManyToMany(mappedBy = "permissions", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @ManyToMany(mappedBy = "permissions", fetch = FetchType.EAGER,
+            cascade = CascadeType.MERGE)
     private Set<Role> roles;
+
+    /*@OneToMany(mappedBy = "permission", orphanRemoval = true, fetch = FetchType.EAGER)
+    private Set<RelRolePermission> relRolePermissions;*/
 
     public Long getId() {
         return id;
@@ -39,4 +43,12 @@ public class Permission {
     public void setRoles(Set<Role> roles) {
         this.roles = roles;
     }
+
+    /*public Set<RelRolePermission> getRelRolePermissions() {
+        return relRolePermissions;
+    }
+
+    public void setRelRolePermissions(Set<RelRolePermission> relRolePermissions) {
+        this.relRolePermissions = relRolePermissions;
+    }*/
 }

@@ -7,35 +7,81 @@ import java.util.Set;
 @Table(name = "sys_user")
 public class User {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(
+            strategy = GenerationType.AUTO
+    )
     private Long id;
 
-    @Column(name = "name_first")
+    @Column(
+            name = "name_first"
+    )
     private String firstName;
 
-    @Column(name = "name_last")
+    @Column(
+            name = "name_last"
+    )
     private String lastName;
 
-    @Column(name = "name_middle")
+    @Column(
+            name = "name_middle"
+    )
     private String middleName;
 
-    @Column(name = "email")
+    @Column(
+            name = "email"
+    )
     private String email;
 
-    @Column(name = "username")
+    @Column(
+            name = "username"
+    )
     private String username;
 
-    @Column(name = "password")
+    @Column(
+            name = "password"
+    )
     private String password;
 
-    @Column(name = "is_enabled")
+    @Column(
+            name = "is_enabled"
+    )
     private Boolean isEnabled;
 
-    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @ManyToMany(
+            cascade = CascadeType.MERGE,
+            fetch = FetchType.EAGER
+    )
     @JoinTable(name = "sys_rel_user_role",
-            joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),
-            inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"))
+            joinColumns = @JoinColumn(
+                    name = "user_id",
+                    referencedColumnName = "id"
+            ),
+            inverseJoinColumns = @JoinColumn(
+                    name = "role_id",
+                    referencedColumnName = "id"
+            )
+    )
     private Set<Role> roles;
+
+    @ManyToMany(
+            cascade = CascadeType.MERGE,
+            fetch = FetchType.EAGER
+    )
+    @JoinTable(
+            name = "sys_rel_user_sub_role",
+            joinColumns = @JoinColumn(
+                    name = "user_id",
+                    referencedColumnName = "id"
+            ),
+            inverseJoinColumns = @JoinColumn(
+                    name = "sub_role_id",
+                    referencedColumnName = "id"
+            )
+    )
+    private Set<SubRole> subRoles;
+
+    /*@OneToMany(mappedBy = "user", orphanRemoval = true, fetch = FetchType.EAGER)
+    private Set<RelUserRole> relUserRoles;*/
 
     public Long getId() {
         return id;
@@ -108,4 +154,22 @@ public class User {
     public void setRoles(Set<Role> roles) {
         this.roles = roles;
     }
+
+    public Set<SubRole> getSubRoles() {
+        return subRoles;
+    }
+
+    public void setSubRoles(Set<SubRole> subRoles) {
+        this.subRoles = subRoles;
+    }
+
+/*
+    public Set<RelUserRole> getRelUserRoles() {
+        return relUserRoles;
+    }
+
+    public void setRelUserRoles(Set<RelUserRole> relUserRoles) {
+        this.relUserRoles = relUserRoles;
+    }
+*/
 }
