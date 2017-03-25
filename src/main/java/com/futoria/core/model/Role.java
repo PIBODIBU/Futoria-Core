@@ -7,26 +7,44 @@ import java.util.Set;
 @Table(name = "sys_role")
 public class Role {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(
+            strategy = GenerationType.AUTO
+    )
     private Long id;
 
-    @Column(name = "role_name")
+    @Column(
+            name = "role_name"
+    )
     private String roleName;
 
-    @ManyToMany(mappedBy = "roles", fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
+    @Column(
+            name = "description"
+    )
+    private String description;
+
+    @ManyToMany(
+            mappedBy = "roles",
+            fetch = FetchType.EAGER,
+            cascade = CascadeType.MERGE
+    )
     private Set<User> users;
 
-    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
-    @JoinTable(name = "sys_rel_role_permission",
-            joinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"),
-            inverseJoinColumns = @JoinColumn(name = "permission_id", referencedColumnName = "id"))
+    @ManyToMany(
+            fetch = FetchType.EAGER,
+            cascade = CascadeType.MERGE
+    )
+    @JoinTable(
+            name = "sys_rel_role_permission",
+            joinColumns = @JoinColumn(
+                    name = "role_id",
+                    referencedColumnName = "id"
+            ),
+            inverseJoinColumns = @JoinColumn(
+                    name = "permission_id",
+                    referencedColumnName = "id"
+            )
+    )
     private Set<Permission> permissions;
-
-    /*@OneToMany(mappedBy = "role", orphanRemoval = true, fetch = FetchType.EAGER)
-    private Set<RelUserRole> relUserRoles;
-
-    @OneToMany(mappedBy = "role", orphanRemoval = true, fetch = FetchType.EAGER)
-    private Set<RelRolePermission> relRolePermissions;*/
 
     public Long getId() {
         return id;
@@ -60,19 +78,11 @@ public class Role {
         this.permissions = permissions;
     }
 
-   /* public Set<RelUserRole> getRelUserRoles() {
-        return relUserRoles;
+    public String getDescription() {
+        return description;
     }
 
-    public void setRelUserRoles(Set<RelUserRole> relUserRoles) {
-        this.relUserRoles = relUserRoles;
+    public void setDescription(String description) {
+        this.description = description;
     }
-
-    public Set<RelRolePermission> getRelRolePermissions() {
-        return relRolePermissions;
-    }
-
-    public void setRelRolePermissions(Set<RelRolePermission> relRolePermissions) {
-        this.relRolePermissions = relRolePermissions;
-    }*/
 }

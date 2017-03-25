@@ -1,6 +1,6 @@
 package com.futoria.core.service;
 
-import com.futoria.core.application.configuration.security.CustomUserDetails;
+import com.futoria.core.application.configuration.security.FutoriaUserDetails;
 import com.futoria.core.model.Permission;
 import com.futoria.core.model.Role;
 import com.futoria.core.model.User;
@@ -47,7 +47,7 @@ public class UserService {
     public Set<Permission> getMyPermissions() {
         Set<Permission> permissions = new HashSet<>();
         User user = userRepository.getFirstById(
-                ((CustomUserDetails) SecurityContextHolder
+                ((FutoriaUserDetails) SecurityContextHolder
                         .getContext()
                         .getAuthentication()
                         .getPrincipal())
@@ -60,10 +60,10 @@ public class UserService {
 
         return permissions;
     }
-    
+
     public User getMyData() {
         return userRepository.getFirstById(
-                ((CustomUserDetails) SecurityContextHolder
+                ((FutoriaUserDetails) SecurityContextHolder
                         .getContext()
                         .getAuthentication()
                         .getPrincipal())

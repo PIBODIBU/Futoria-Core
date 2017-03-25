@@ -7,18 +7,27 @@ import java.util.Set;
 @Table(name = "sys_permission")
 public class Permission {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(
+            strategy = GenerationType.AUTO
+    )
     private Long id;
 
-    @Column(name = "name")
+    @Column(
+            name = "name"
+    )
     private String name;
 
-    @ManyToMany(mappedBy = "permissions", fetch = FetchType.EAGER,
-            cascade = CascadeType.MERGE)
-    private Set<Role> roles;
+    @Column(
+            name = "description"
+    )
+    private String description;
 
-    /*@OneToMany(mappedBy = "permission", orphanRemoval = true, fetch = FetchType.EAGER)
-    private Set<RelRolePermission> relRolePermissions;*/
+    @ManyToMany(
+            mappedBy = "permissions",
+            fetch = FetchType.EAGER,
+            cascade = CascadeType.MERGE
+    )
+    private Set<Role> roles;
 
     public Long getId() {
         return id;
@@ -44,11 +53,11 @@ public class Permission {
         this.roles = roles;
     }
 
-    /*public Set<RelRolePermission> getRelRolePermissions() {
-        return relRolePermissions;
+    public String getDescription() {
+        return description;
     }
 
-    public void setRelRolePermissions(Set<RelRolePermission> relRolePermissions) {
-        this.relRolePermissions = relRolePermissions;
-    }*/
+    public void setDescription(String description) {
+        this.description = description;
+    }
 }

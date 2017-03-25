@@ -30,6 +30,7 @@ public class RoleSerializer implements JsonSerializer<Role> {
 
         object.addProperty("id", src.getId());
         object.addProperty("name", src.getRoleName());
+        object.addProperty("description", src.getDescription());
 
         return object;
     }

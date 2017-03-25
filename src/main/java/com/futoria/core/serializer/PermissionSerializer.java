@@ -30,6 +30,7 @@ public class PermissionSerializer implements JsonSerializer<Permission> {
 
         object.addProperty("id", src.getId());
         object.addProperty("name", src.getName());
+        object.addProperty("description", src.getDescription());
 
         return object;
     }

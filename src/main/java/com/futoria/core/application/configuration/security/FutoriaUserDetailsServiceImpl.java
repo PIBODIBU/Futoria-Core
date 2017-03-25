@@ -3,6 +3,7 @@ package com.futoria.core.application.configuration.security;
 import com.futoria.core.model.Role;
 import com.futoria.core.model.User;
 import com.futoria.core.repository.UserRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.dao.DataAccessException;
 import org.springframework.security.core.GrantedAuthority;
@@ -16,11 +17,16 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Service("CoreUserDetailsService")
-public class UserDetailsServiceImpl implements UserDetailsService {
+public class FutoriaUserDetailsServiceImpl implements UserDetailsService {
     private UserRepository userRepository;
 
-    public UserDetailsServiceImpl(@Qualifier("CoreUserRepository")
+    public FutoriaUserDetailsServiceImpl(@Qualifier("CoreUserRepository")
                                           UserRepository userRepository) {
+        this.userRepository = userRepository;
+    }
+
+    @Autowired
+    public void setUserRepository(@Qualifier("CoreUserRepository") UserRepository userRepository) {
         this.userRepository = userRepository;
     }
 
@@ -29,7 +35,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
         User user = userRepository.getByUsername(username);
 
-        userDetails = new CustomUserDetails(
+        userDetails = new FutoriaUserDetails(
                 user,
                 true,
                 true,
