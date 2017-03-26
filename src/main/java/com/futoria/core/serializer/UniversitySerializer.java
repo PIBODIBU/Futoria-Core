@@ -1,6 +1,7 @@
 package com.futoria.core.serializer;
 
 import com.futoria.core.model.UserData;
+import com.futoria.core.model.university.Faculty;
 import com.futoria.core.model.university.University;
 import com.google.gson.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,7 +11,7 @@ import java.lang.reflect.Type;
 
 @Component
 public class UniversitySerializer implements JsonSerializer<University> {
-    private UserDataSerializer userDataSerializer;
+    private FacultySerializer facultySerializer;
 
     /**
      * Gson invokes this call-back method during serialization when it encounters a field of the
@@ -30,27 +31,27 @@ public class UniversitySerializer implements JsonSerializer<University> {
     @Override
     public JsonElement serialize(University src, Type typeOfSrc, JsonSerializationContext context) {
         JsonObject jsonObject = new JsonObject();
-        JsonArray userDataJsonArray = new JsonArray();
+        JsonArray faculties = new JsonArray();
 
         jsonObject.addProperty("id", src.getId());
         jsonObject.addProperty("shortName", src.getShortName());
         jsonObject.addProperty("longName", src.getLongName());
 
         try {
-            for (UserData userData : src.getUsersData()) {
-                userDataJsonArray.add(userDataSerializer.serialize(userData, typeOfSrc, context));
+            for (Faculty faculty : src.getFaculties()) {
+                faculties.add(facultySerializer.serialize(faculty, typeOfSrc, context));
             }
         } catch (Exception ex) {
             ex.printStackTrace();
         } finally {
-            jsonObject.add("usersData", userDataJsonArray);
+            jsonObject.add("faculties", faculties);
         }
 
         return jsonObject;
     }
 
     @Autowired
-    public void setUserDataSerializer(UserDataSerializer userDataSerializer) {
-        this.userDataSerializer = userDataSerializer;
+    public void setFacultySerializer(FacultySerializer facultySerializer) {
+        this.facultySerializer = facultySerializer;
     }
 }

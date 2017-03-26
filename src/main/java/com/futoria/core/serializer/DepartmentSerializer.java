@@ -10,7 +10,7 @@ import java.lang.reflect.Type;
 
 @Component
 public class DepartmentSerializer implements JsonSerializer<Department> {
-    private UserDataSerializer userDataSerializer;
+    private FacultySerializer facultySerializer;
 
     /**
      * Gson invokes this call-back method during serialization when it encounters a field of the
@@ -30,27 +30,24 @@ public class DepartmentSerializer implements JsonSerializer<Department> {
     @Override
     public JsonElement serialize(Department src, Type typeOfSrc, JsonSerializationContext context) {
         JsonObject jsonObject = new JsonObject();
-        JsonArray userDataJsonArray = new JsonArray();
 
         jsonObject.addProperty("id", src.getId());
         jsonObject.addProperty("shortName", src.getShortName());
         jsonObject.addProperty("longName", src.getLongName());
 
         try {
-            for (UserData userData : src.getUsersData()) {
-                userDataJsonArray.add(userDataSerializer.serialize(userData, typeOfSrc, context));
-            }
+            jsonObject.add("faculty", facultySerializer.serialize(src.getFaculty(), typeOfSrc, context));
         } catch (Exception ex) {
             ex.printStackTrace();
         } finally {
-            jsonObject.add("usersData", userDataJsonArray);
+            jsonObject.add("faculty", new JsonObject());
         }
 
         return jsonObject;
     }
 
     @Autowired
-    public void setUserDataSerializer(UserDataSerializer userDataSerializer) {
-        this.userDataSerializer = userDataSerializer;
+    public void setFacultySerializer(FacultySerializer facultySerializer) {
+        this.facultySerializer = facultySerializer;
     }
 }

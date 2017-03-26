@@ -1,9 +1,6 @@
 package com.futoria.core.model;
 
-import com.futoria.core.model.university.Department;
-import com.futoria.core.model.university.Faculty;
 import com.futoria.core.model.university.Group;
-import com.futoria.core.model.university.University;
 
 import javax.persistence.*;
 
@@ -37,33 +34,6 @@ public class UserData {
             length = 20
     )
     private String phone;
-
-    @ManyToOne(
-            fetch = FetchType.EAGER,
-            cascade = CascadeType.MERGE
-    )
-    @JoinColumn(
-            name = "university_id"
-    )
-    private University university;
-
-    @ManyToOne(
-            fetch = FetchType.EAGER,
-            cascade = CascadeType.MERGE
-    )
-    @JoinColumn(
-            name = "faculty_id"
-    )
-    private Faculty faculty;
-
-    @ManyToOne(
-            fetch = FetchType.EAGER,
-            cascade = CascadeType.MERGE
-    )
-    @JoinColumn(
-            name = "department_id"
-    )
-    private Department department;
 
     @ManyToOne(
             fetch = FetchType.EAGER,
@@ -104,30 +74,6 @@ public class UserData {
 
     public void setPhone(String phone) {
         this.phone = phone;
-    }
-
-    public University getUniversity() {
-        return university;
-    }
-
-    public void setUniversity(University university) {
-        this.university = university;
-    }
-
-    public Faculty getFaculty() {
-        return faculty;
-    }
-
-    public void setFaculty(Faculty faculty) {
-        this.faculty = faculty;
-    }
-
-    public Department getDepartment() {
-        return department;
-    }
-
-    public void setDepartment(Department department) {
-        this.department = department;
     }
 
     public Group getGroup() {

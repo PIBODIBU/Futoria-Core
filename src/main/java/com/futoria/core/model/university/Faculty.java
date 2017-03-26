@@ -1,7 +1,5 @@
 package com.futoria.core.model.university;
 
-import com.futoria.core.model.UserData;
-
 import javax.persistence.*;
 import java.util.Set;
 
@@ -20,7 +18,7 @@ public class Faculty {
             mappedBy = "faculty",
             orphanRemoval = true
     )
-    private Set<UserData> usersData;
+    private Set<Department> departments;
 
     @Column(
             name = "short_name",
@@ -34,6 +32,15 @@ public class Faculty {
     )
     private String longName;
 
+    @ManyToOne(
+            fetch = FetchType.EAGER,
+            cascade = CascadeType.MERGE
+    )
+    @JoinColumn(
+            name = "university_id"
+    )
+    private University university;
+
     public Long getId() {
         return id;
     }
@@ -42,12 +49,12 @@ public class Faculty {
         this.id = id;
     }
 
-    public Set<UserData> getUsersData() {
-        return usersData;
+    public Set<Department> getDepartments() {
+        return departments;
     }
 
-    public void setUsersData(Set<UserData> usersData) {
-        this.usersData = usersData;
+    public void setDepartments(Set<Department> departments) {
+        this.departments = departments;
     }
 
     public String getShortName() {
@@ -64,5 +71,13 @@ public class Faculty {
 
     public void setLongName(String longName) {
         this.longName = longName;
+    }
+
+    public University getUniversity() {
+        return university;
+    }
+
+    public void setUniversity(University university) {
+        this.university = university;
     }
 }

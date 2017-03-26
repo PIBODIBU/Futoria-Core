@@ -42,7 +42,12 @@ public class UserSerializer implements JsonSerializer<User> {
         object.addProperty("username", src.getUsername());
         object.addProperty("password", src.getPassword());
         object.addProperty("isEnabled", src.getEnabled());
-        object.add("userData", userDataSerializer.serialize(src.getUserData(), typeOfSrc, context));
+
+        try {
+            object.add("userData", userDataSerializer.serialize(src.getUserData(), typeOfSrc, context));
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
 
         try {
             for (Role role : src.getRoles()) {

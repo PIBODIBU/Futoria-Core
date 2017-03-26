@@ -1,8 +1,10 @@
 package com.futoria.core.serializer;
 
-import com.futoria.core.model.UserData;
 import com.futoria.core.model.university.Faculty;
-import com.google.gson.*;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonSerializationContext;
+import com.google.gson.JsonSerializer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -10,7 +12,7 @@ import java.lang.reflect.Type;
 
 @Component
 public class FacultySerializer implements JsonSerializer<Faculty> {
-    private UserDataSerializer userDataSerializer;
+    private UniversitySerializer universitySerializer;
 
     /**
      * Gson invokes this call-back method during serialization when it encounters a field of the
@@ -30,27 +32,24 @@ public class FacultySerializer implements JsonSerializer<Faculty> {
     @Override
     public JsonElement serialize(Faculty src, Type typeOfSrc, JsonSerializationContext context) {
         JsonObject jsonObject = new JsonObject();
-        JsonArray userDataJsonArray = new JsonArray();
 
         jsonObject.addProperty("id", src.getId());
         jsonObject.addProperty("shortName", src.getShortName());
         jsonObject.addProperty("longName", src.getLongName());
 
         try {
-            for (UserData userData : src.getUsersData()) {
-                userDataJsonArray.add(userDataSerializer.serialize(userData, typeOfSrc, context));
-            }
+            jsonObject.add("university", universitySerializer.serialize(src.getUniversity(), typeOfSrc, context));
         } catch (Exception ex) {
             ex.printStackTrace();
         } finally {
-            jsonObject.add("usersData", userDataJsonArray);
+            jsonObject.add("university", new JsonObject());
         }
 
         return jsonObject;
     }
 
     @Autowired
-    public void setUserDataSerializer(UserDataSerializer userDataSerializer) {
-        this.userDataSerializer = userDataSerializer;
+    public void setUniversitySerializer(UniversitySerializer universitySerializer) {
+        this.universitySerializer = universitySerializer;
     }
 }

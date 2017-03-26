@@ -33,6 +33,15 @@ public class Group {
     )
     private Integer subGroup;
 
+    @ManyToOne(
+            fetch = FetchType.EAGER,
+            cascade = CascadeType.MERGE
+    )
+    @JoinColumn(
+            name = "department_id"
+    )
+    private Department department;
+
     public Long getId() {
         return id;
     }
@@ -63,5 +72,13 @@ public class Group {
 
     public void setSubGroup(Integer subGroup) {
         this.subGroup = subGroup;
+    }
+
+    public Department getDepartment() {
+        return department;
+    }
+
+    public void setDepartment(Department department) {
+        this.department = department;
     }
 }

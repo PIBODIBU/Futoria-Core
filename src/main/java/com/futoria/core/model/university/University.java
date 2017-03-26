@@ -20,7 +20,7 @@ public class University {
             mappedBy = "university",
             orphanRemoval = true
     )
-    private Set<UserData> usersData;
+    private Set<Faculty> faculties;
 
     @Column(
             name = "short_name",
@@ -42,12 +42,12 @@ public class University {
         this.id = id;
     }
 
-    public Set<UserData> getUsersData() {
-        return usersData;
+    public Set<Faculty> getFaculties() {
+        return faculties;
     }
 
-    public void setUsersData(Set<UserData> usersData) {
-        this.usersData = usersData;
+    public void setFaculties(Set<Faculty> faculties) {
+        this.faculties = faculties;
     }
 
     public String getShortName() {

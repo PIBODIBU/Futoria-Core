@@ -11,6 +11,7 @@ import java.lang.reflect.Type;
 @Component
 public class GroupSerializer implements JsonSerializer<Group> {
     private UserDataSerializer userDataSerializer;
+    private DepartmentSerializer departmentSerializer;
 
     /**
      * Gson invokes this call-back method during serialization when it encounters a field of the
@@ -46,11 +47,24 @@ public class GroupSerializer implements JsonSerializer<Group> {
             jsonObject.add("usersData", userDataJsonArray);
         }
 
+        try {
+            jsonObject.add("department", departmentSerializer.serialize(src.getDepartment(), typeOfSrc, context));
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        } finally {
+            jsonObject.add("department", new JsonObject());
+        }
+
         return jsonObject;
     }
 
     @Autowired
     public void setUserDataSerializer(UserDataSerializer userDataSerializer) {
         this.userDataSerializer = userDataSerializer;
+    }
+
+    @Autowired
+    public void setDepartmentSerializer(DepartmentSerializer departmentSerializer) {
+        this.departmentSerializer = departmentSerializer;
     }
 }

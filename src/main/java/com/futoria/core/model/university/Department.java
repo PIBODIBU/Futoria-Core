@@ -20,7 +20,7 @@ public class Department {
             mappedBy = "department",
             orphanRemoval = true
     )
-    private Set<UserData> usersData;
+    private Set<Group> groups;
 
     @Column(
             name = "short_name",
@@ -34,6 +34,15 @@ public class Department {
     )
     private String longName;
 
+    @ManyToOne(
+            fetch = FetchType.EAGER,
+            cascade = CascadeType.MERGE
+    )
+    @JoinColumn(
+            name = "faculty_id"
+    )
+    private Faculty faculty;
+
     public Long getId() {
         return id;
     }
@@ -42,12 +51,12 @@ public class Department {
         this.id = id;
     }
 
-    public Set<UserData> getUsersData() {
-        return usersData;
+    public Set<Group> getGroups() {
+        return groups;
     }
 
-    public void setUsersData(Set<UserData> usersData) {
-        this.usersData = usersData;
+    public void setGroups(Set<Group> groups) {
+        this.groups = groups;
     }
 
     public String getShortName() {
@@ -64,5 +73,13 @@ public class Department {
 
     public void setLongName(String longName) {
         this.longName = longName;
+    }
+
+    public Faculty getFaculty() {
+        return faculty;
+    }
+
+    public void setFaculty(Faculty faculty) {
+        this.faculty = faculty;
     }
 }

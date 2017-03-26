@@ -40,11 +40,12 @@ public class UserDataSerializer implements JsonSerializer<UserData> {
         jsonObject.addProperty("id", src.getId());
         jsonObject.addProperty("bookNum", src.getBookNum());
         jsonObject.addProperty("phone", src.getPhone());
-        jsonObject.add("user", userSerializer.serialize(src.getUser(), typeOfSrc, context));
-        jsonObject.add("university", universitySerializer.serialize(src.getUniversity(), typeOfSrc, context));
-        jsonObject.add("faculty", facultySerializer.serialize(src.getFaculty(), typeOfSrc, context));
-        jsonObject.add("department", departmentSerializer.serialize(src.getDepartment(), typeOfSrc, context));
-        jsonObject.add("group", groupSerializer.serialize(src.getGroup(), typeOfSrc, context));
+
+        try {
+            jsonObject.add("group", groupSerializer.serialize(src.getGroup(), typeOfSrc, context));
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
 
         return jsonObject;
     }
