@@ -6,26 +6,5 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd">
 
     <mvc:annotation-driven/>
-
     <context:component-scan base-package="com.futoria.core"/>
-
-    <mvc:resources mapping="/resources/**" location="/static/"/>
-
-    <!-- BEANS -->
-    <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
-        <property name="prefix" value="/jsp/"/>
-    </bean>
-
-    <bean id="sessionFactory"
-          class="org.springframework.orm.hibernate5.LocalSessionFactoryBean">
-        <property name="dataSource" ref="dataSource"/>
-        <property name="packagesToScan" value="com.futoria.core.model"/>
-        <property name="hibernateProperties">
-            <props>
-                <prop key="hibernate.dialect">org.hibernate.dialect.MySQL5Dialect</prop>
-                <prop key="hibernate.show_sql">true</prop>
-                <prop key="hibernate.enable_lazy_load_no_trans">true</prop>
-            </props>
-        </property>
-    </bean>
 </beans>

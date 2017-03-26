@@ -10,10 +10,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
-import java.util.Collection;
-import java.util.Collections;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 @Component("CoreSecurityService")
 public class FutoriaSecurityService {
@@ -34,21 +31,6 @@ public class FutoriaSecurityService {
 
         return false;
     }
-
-    /*public boolean hasRoleAsMajor(String role) {
-        FutoriaUserDetails userDetails = ((FutoriaUserDetails) SecurityContextHolder
-                .getContext()
-                .getAuthentication()
-                .getPrincipal());
-
-        User user = userDetails.getUser();
-
-        Collection<GrantedAuthority> roles = userDetails.getAuthorities();
-
-        Collections.sort(roles, (t, t1) -> ((GrantedAuthority) t).getAuthority());
-
-        return false;
-    }*/
 
     public User getUserFromContext() {
         return ((FutoriaUserDetails) SecurityContextHolder

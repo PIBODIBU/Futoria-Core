@@ -1,18 +1,16 @@
 package com.futoria.core.serializer;
 
+import com.futoria.core.model.UserData;
+import com.futoria.core.model.university.Faculty;
 import com.google.gson.*;
-import com.futoria.core.model.Role;
-import com.futoria.core.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import javax.xml.ws.Action;
 import java.lang.reflect.Type;
 
 @Component
-public class UserSerializer implements JsonSerializer<User> {
+public class FacultySerializer implements JsonSerializer<Faculty> {
     private UserDataSerializer userDataSerializer;
-    private RoleSerializer roleSerializer;
 
     /**
      * Gson invokes this call-back method during serialization when it encounters a field of the
@@ -30,40 +28,29 @@ public class UserSerializer implements JsonSerializer<User> {
      * @return a JsonElement corresponding to the specified object.
      */
     @Override
-    public JsonElement serialize(User src, Type typeOfSrc, JsonSerializationContext context) {
-        JsonObject object = new JsonObject();
-        JsonArray roles = new JsonArray();
+    public JsonElement serialize(Faculty src, Type typeOfSrc, JsonSerializationContext context) {
+        JsonObject jsonObject = new JsonObject();
+        JsonArray userDataJsonArray = new JsonArray();
 
-        object.addProperty("id", src.getId());
-        object.addProperty("firstName", src.getFirstName());
-        object.addProperty("lastName", src.getLastName());
-        object.addProperty("middleName", src.getMiddleName());
-        object.addProperty("email", src.getEmail());
-        object.addProperty("username", src.getUsername());
-        object.addProperty("password", src.getPassword());
-        object.addProperty("isEnabled", src.getEnabled());
-        object.add("userData", userDataSerializer.serialize(src.getUserData(), typeOfSrc, context));
+        jsonObject.addProperty("id", src.getId());
+        jsonObject.addProperty("shortName", src.getShortName());
+        jsonObject.addProperty("longName", src.getLongName());
 
         try {
-            for (Role role : src.getRoles()) {
-                roles.add(roleSerializer.serialize(role, typeOfSrc, context));
+            for (UserData userData : src.getUsersData()) {
+                userDataJsonArray.add(userDataSerializer.serialize(userData, typeOfSrc, context));
             }
         } catch (Exception ex) {
             ex.printStackTrace();
         } finally {
-            object.add("roles", roles);
+            jsonObject.add("usersData", userDataJsonArray);
         }
 
-        return object;
+        return jsonObject;
     }
 
     @Autowired
     public void setUserDataSerializer(UserDataSerializer userDataSerializer) {
         this.userDataSerializer = userDataSerializer;
-    }
-
-    @Autowired
-    public void setRoleSerializer(RoleSerializer roleSerializer) {
-        this.roleSerializer = roleSerializer;
     }
 }

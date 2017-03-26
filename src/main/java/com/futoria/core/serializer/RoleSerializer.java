@@ -5,9 +5,11 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonSerializationContext;
 import com.google.gson.JsonSerializer;
 import com.futoria.core.model.Role;
+import org.springframework.stereotype.Component;
 
 import java.lang.reflect.Type;
 
+@Component
 public class RoleSerializer implements JsonSerializer<Role> {
     /**
      * Gson invokes this call-back method during serialization when it encounters a field of the
