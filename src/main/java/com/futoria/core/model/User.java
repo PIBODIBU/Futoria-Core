@@ -59,9 +59,6 @@ public class User {
             cascade = CascadeType.MERGE,
             fetch = FetchType.EAGER
     )
-    @OrderBy(
-            "majority ASC"
-    )
     @JoinTable(name = "sys_rel_user_role",
             joinColumns = @JoinColumn(
                     name = "user_id",
