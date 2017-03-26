@@ -1,18 +1,19 @@
 package com.futoria.core.serializer;
 
-import com.google.gson.*;
 import com.futoria.core.model.Role;
 import com.futoria.core.model.User;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+import com.google.gson.*;
 
-import javax.xml.ws.Action;
 import java.lang.reflect.Type;
 
-@Component
 public class UserSerializer implements JsonSerializer<User> {
-    private UserDataSerializer userDataSerializer;
-    private RoleSerializer roleSerializer;
+    private static UserDataSerializer userDataSerializer;
+    private static RoleSerializer roleSerializer;
+
+    static {
+        userDataSerializer = new UserDataSerializer();
+        roleSerializer = new RoleSerializer();
+    }
 
     /**
      * Gson invokes this call-back method during serialization when it encounters a field of the
@@ -60,15 +61,5 @@ public class UserSerializer implements JsonSerializer<User> {
         }
 
         return object;
-    }
-
-    @Autowired
-    public void setUserDataSerializer(UserDataSerializer userDataSerializer) {
-        this.userDataSerializer = userDataSerializer;
-    }
-
-    @Autowired
-    public void setRoleSerializer(RoleSerializer roleSerializer) {
-        this.roleSerializer = roleSerializer;
     }
 }

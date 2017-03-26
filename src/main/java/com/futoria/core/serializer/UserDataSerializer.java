@@ -5,18 +5,15 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonSerializationContext;
 import com.google.gson.JsonSerializer;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 
 import java.lang.reflect.Type;
 
-@Component
 public class UserDataSerializer implements JsonSerializer<UserData> {
-    private UserSerializer userSerializer;
-    private UniversitySerializer universitySerializer;
-    private FacultySerializer facultySerializer;
-    private DepartmentSerializer departmentSerializer;
-    private GroupSerializer groupSerializer;
+    private static GroupSerializer groupSerializer;
+
+    static {
+        groupSerializer = new GroupSerializer();
+    }
 
     /**
      * Gson invokes this call-back method during serialization when it encounters a field of the
@@ -42,36 +39,14 @@ public class UserDataSerializer implements JsonSerializer<UserData> {
         jsonObject.addProperty("phone", src.getPhone());
 
         try {
+            // Remove all references to this Object
+            src.getGroup().setUsersData(null);
+
             jsonObject.add("group", groupSerializer.serialize(src.getGroup(), typeOfSrc, context));
         } catch (Exception ex) {
             ex.printStackTrace();
         }
 
         return jsonObject;
-    }
-
-    @Autowired
-    public void setUserSerializer(UserSerializer userSerializer) {
-        this.userSerializer = userSerializer;
-    }
-
-    @Autowired
-    public void setUniversitySerializer(UniversitySerializer universitySerializer) {
-        this.universitySerializer = universitySerializer;
-    }
-
-    @Autowired
-    public void setFacultySerializer(FacultySerializer facultySerializer) {
-        this.facultySerializer = facultySerializer;
-    }
-
-    @Autowired
-    public void setDepartmentSerializer(DepartmentSerializer departmentSerializer) {
-        this.departmentSerializer = departmentSerializer;
-    }
-
-    @Autowired
-    public void setGroupSerializer(GroupSerializer groupSerializer) {
-        this.groupSerializer = groupSerializer;
     }
 }

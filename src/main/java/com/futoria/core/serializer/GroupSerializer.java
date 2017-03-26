@@ -3,15 +3,19 @@ package com.futoria.core.serializer;
 import com.futoria.core.model.UserData;
 import com.futoria.core.model.university.Group;
 import com.google.gson.*;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.lang.reflect.Type;
 
 @Component
 public class GroupSerializer implements JsonSerializer<Group> {
-    private UserDataSerializer userDataSerializer;
-    private DepartmentSerializer departmentSerializer;
+    private static UserDataSerializer userDataSerializer;
+    private static DepartmentSerializer departmentSerializer;
+
+    static {
+        userDataSerializer = new UserDataSerializer();
+        departmentSerializer = new DepartmentSerializer();
+    }
 
     /**
      * Gson invokes this call-back method during serialization when it encounters a field of the
@@ -41,30 +45,21 @@ public class GroupSerializer implements JsonSerializer<Group> {
             for (UserData userData : src.getUsersData()) {
                 userDataJsonArray.add(userDataSerializer.serialize(userData, typeOfSrc, context));
             }
+
+            jsonObject.add("usersData", userDataJsonArray);
         } catch (Exception ex) {
             ex.printStackTrace();
-        } finally {
-            jsonObject.add("usersData", userDataJsonArray);
         }
 
         try {
+            // Remove all references to this Object
+            src.getDepartment().setGroups(null);
+
             jsonObject.add("department", departmentSerializer.serialize(src.getDepartment(), typeOfSrc, context));
         } catch (Exception ex) {
             ex.printStackTrace();
-        } finally {
-            jsonObject.add("department", new JsonObject());
         }
 
         return jsonObject;
-    }
-
-    @Autowired
-    public void setUserDataSerializer(UserDataSerializer userDataSerializer) {
-        this.userDataSerializer = userDataSerializer;
-    }
-
-    @Autowired
-    public void setDepartmentSerializer(DepartmentSerializer departmentSerializer) {
-        this.departmentSerializer = departmentSerializer;
     }
 }

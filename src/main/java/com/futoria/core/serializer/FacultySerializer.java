@@ -5,14 +5,17 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonSerializationContext;
 import com.google.gson.JsonSerializer;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.lang.reflect.Type;
 
 @Component
 public class FacultySerializer implements JsonSerializer<Faculty> {
-    private UniversitySerializer universitySerializer;
+    private static UniversitySerializer universitySerializer;
+
+    static {
+        universitySerializer = new UniversitySerializer();
+    }
 
     /**
      * Gson invokes this call-back method during serialization when it encounters a field of the
@@ -38,18 +41,14 @@ public class FacultySerializer implements JsonSerializer<Faculty> {
         jsonObject.addProperty("longName", src.getLongName());
 
         try {
+            // Remove all references to this Object
+            src.getUniversity().setFaculties(null);
+
             jsonObject.add("university", universitySerializer.serialize(src.getUniversity(), typeOfSrc, context));
         } catch (Exception ex) {
             ex.printStackTrace();
-        } finally {
-            jsonObject.add("university", new JsonObject());
         }
 
         return jsonObject;
-    }
-
-    @Autowired
-    public void setUniversitySerializer(UniversitySerializer universitySerializer) {
-        this.universitySerializer = universitySerializer;
     }
 }

@@ -88,9 +88,6 @@ public class User {
     )
     private Set<SubRole> subRoles;
 
-    /*@OneToMany(mappedBy = "user", orphanRemoval = true, fetch = FetchType.EAGER)
-    private Set<RelUserRole> relUserRoles;*/
-
     public Long getId() {
         return id;
     }
@@ -178,14 +175,4 @@ public class User {
     public void setSubRoles(Set<SubRole> subRoles) {
         this.subRoles = subRoles;
     }
-
-/*
-    public Set<RelUserRole> getRelUserRoles() {
-        return relUserRoles;
-    }
-
-    public void setRelUserRoles(Set<RelUserRole> relUserRoles) {
-        this.relUserRoles = relUserRoles;
-    }
-*/
 }

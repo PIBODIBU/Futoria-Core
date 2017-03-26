@@ -1,16 +1,21 @@
 package com.futoria.core.serializer;
 
-import com.futoria.core.model.UserData;
 import com.futoria.core.model.university.Department;
-import com.google.gson.*;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonSerializationContext;
+import com.google.gson.JsonSerializer;
 import org.springframework.stereotype.Component;
 
 import java.lang.reflect.Type;
 
 @Component
 public class DepartmentSerializer implements JsonSerializer<Department> {
-    private FacultySerializer facultySerializer;
+    private static FacultySerializer facultySerializer;
+
+    static {
+        facultySerializer = new FacultySerializer();
+    }
 
     /**
      * Gson invokes this call-back method during serialization when it encounters a field of the
@@ -36,18 +41,14 @@ public class DepartmentSerializer implements JsonSerializer<Department> {
         jsonObject.addProperty("longName", src.getLongName());
 
         try {
+            // Remove all references to this Object
+            src.getFaculty().setDepartments(null);
+
             jsonObject.add("faculty", facultySerializer.serialize(src.getFaculty(), typeOfSrc, context));
         } catch (Exception ex) {
             ex.printStackTrace();
-        } finally {
-            jsonObject.add("faculty", new JsonObject());
         }
 
         return jsonObject;
-    }
-
-    @Autowired
-    public void setFacultySerializer(FacultySerializer facultySerializer) {
-        this.facultySerializer = facultySerializer;
     }
 }
