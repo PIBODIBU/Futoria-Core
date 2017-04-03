@@ -1,6 +1,6 @@
 package com.futoria.core.serializer;
 
-import com.futoria.core.model.security.Permission;
+import com.futoria.core.model.university.Subject;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonSerializationContext;
@@ -8,7 +8,7 @@ import com.google.gson.JsonSerializer;
 
 import java.lang.reflect.Type;
 
-public class PermissionSerializer implements JsonSerializer<Permission> {
+public class SubjectSerializer implements JsonSerializer<Subject> {
     /**
      * Gson invokes this call-back method during serialization when it encounters a field of the
      * specified type.
@@ -25,13 +25,15 @@ public class PermissionSerializer implements JsonSerializer<Permission> {
      * @return a JsonElement corresponding to the specified object.
      */
     @Override
-    public JsonElement serialize(Permission src, Type typeOfSrc, JsonSerializationContext context) {
-        JsonObject object = new JsonObject();
+    public JsonElement serialize(Subject src, Type typeOfSrc, JsonSerializationContext context) {
+        JsonObject jsonObject = new JsonObject();
 
-        object.addProperty("id", src.getId());
-        object.addProperty("name", src.getName());
-        object.addProperty("description", src.getDescription());
+        jsonObject.addProperty("id", src.getId());
+        jsonObject.addProperty("uuid", src.getUuid());
+        jsonObject.addProperty("shortName", src.getShortName());
+        jsonObject.addProperty("longName", src.getLongName());
+        jsonObject.add("department", new DepartmentSerializer().serialize(src.getDepartment(), typeOfSrc, context));
 
-        return object;
+        return jsonObject;
     }
 }

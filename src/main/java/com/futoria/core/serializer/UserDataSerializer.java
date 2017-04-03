@@ -1,6 +1,6 @@
 package com.futoria.core.serializer;
 
-import com.futoria.core.model.UserData;
+import com.futoria.core.model.user.UserData;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonSerializationContext;

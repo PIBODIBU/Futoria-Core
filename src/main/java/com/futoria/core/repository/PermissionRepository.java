@@ -1,6 +1,6 @@
 package com.futoria.core.repository;
 
-import com.futoria.core.model.Permission;
+import com.futoria.core.model.security.Permission;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 

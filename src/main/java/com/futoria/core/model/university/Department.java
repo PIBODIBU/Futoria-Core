@@ -1,7 +1,5 @@
 package com.futoria.core.model.university;
 
-import com.futoria.core.model.UserData;
-
 import javax.persistence.*;
 import java.util.Set;
 
@@ -43,6 +41,14 @@ public class Department {
     )
     private Faculty faculty;
 
+    @OneToMany(
+            mappedBy = "department",
+            cascade = CascadeType.MERGE,
+            fetch = FetchType.EAGER,
+            orphanRemoval = true
+    )
+    private Set<Subject> subjects;
+
     public Long getId() {
         return id;
     }
@@ -81,5 +87,13 @@ public class Department {
 
     public void setFaculty(Faculty faculty) {
         this.faculty = faculty;
+    }
+
+    public Set<Subject> getSubjects() {
+        return subjects;
+    }
+
+    public void setSubjects(Set<Subject> subjects) {
+        this.subjects = subjects;
     }
 }

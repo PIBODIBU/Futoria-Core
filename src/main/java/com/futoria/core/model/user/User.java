@@ -1,10 +1,15 @@
-package com.futoria.core.model;
+package com.futoria.core.model.user;
+
+import com.futoria.core.model.security.Role;
+import com.futoria.core.model.security.SubRole;
+import com.futoria.core.model.university.Group;
 
 import javax.persistence.*;
 import java.util.Set;
 
 @Entity
 @Table(name = "sys_user")
+@Inheritance
 public class User {
     @Id
     @GeneratedValue(
@@ -87,6 +92,13 @@ public class User {
             )
     )
     private Set<SubRole> subRoles;
+
+    @OneToOne(
+            mappedBy = "headMaster",
+            fetch = FetchType.EAGER,
+            cascade = CascadeType.MERGE
+    )
+    private Group myGroup;
 
     public Long getId() {
         return id;
@@ -174,5 +186,13 @@ public class User {
 
     public void setSubRoles(Set<SubRole> subRoles) {
         this.subRoles = subRoles;
+    }
+
+    public Group getMyGroup() {
+        return myGroup;
+    }
+
+    public void setMyGroup(Group myGroup) {
+        this.myGroup = myGroup;
     }
 }

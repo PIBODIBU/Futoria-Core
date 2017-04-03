@@ -1,7 +1,5 @@
 package com.futoria.core.model.university;
 
-import com.futoria.core.model.UserData;
-
 import javax.persistence.*;
 import java.util.Set;
 

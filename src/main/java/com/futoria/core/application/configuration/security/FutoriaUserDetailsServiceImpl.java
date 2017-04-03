@@ -1,7 +1,7 @@
 package com.futoria.core.application.configuration.security;
 
-import com.futoria.core.model.Role;
-import com.futoria.core.model.User;
+import com.futoria.core.model.security.Role;
+import com.futoria.core.model.user.User;
 import com.futoria.core.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;

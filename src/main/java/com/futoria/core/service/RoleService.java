@@ -1,6 +1,6 @@
 package com.futoria.core.service;
 
-import com.futoria.core.model.Role;
+import com.futoria.core.model.security.Role;
 import com.futoria.core.repository.RoleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;

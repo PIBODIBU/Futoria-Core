@@ -1,6 +1,6 @@
 package com.futoria.core.serializer;
 
-import com.futoria.core.model.UserData;
+import com.futoria.core.model.user.UserData;
 import com.futoria.core.model.university.Group;
 import com.google.gson.*;
 import org.springframework.stereotype.Component;

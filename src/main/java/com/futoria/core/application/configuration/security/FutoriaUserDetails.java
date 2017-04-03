@@ -1,6 +1,6 @@
 package com.futoria.core.application.configuration.security;
 
-import com.futoria.core.model.User;
+import com.futoria.core.model.user.User;
 import org.springframework.security.core.GrantedAuthority;
 
 import java.util.Collection;

@@ -1,4 +1,4 @@
-package com.futoria.core.model;
+package com.futoria.core.model.user;
 
 import com.futoria.core.model.university.Group;
 

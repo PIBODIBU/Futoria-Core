@@ -1,6 +1,7 @@
 package com.futoria.core.model.university;
 
-import com.futoria.core.model.UserData;
+import com.futoria.core.model.user.User;
+import com.futoria.core.model.user.UserData;
 
 import javax.persistence.*;
 import java.util.Set;
@@ -42,6 +43,15 @@ public class Group {
     )
     private Department department;
 
+    @OneToOne(
+            fetch = FetchType.EAGER,
+            cascade = CascadeType.MERGE
+    )
+    @JoinColumn(
+            name = "master_id"
+    )
+    private User headMaster;
+
     public Long getId() {
         return id;
     }
@@ -80,5 +90,13 @@ public class Group {
 
     public void setDepartment(Department department) {
         this.department = department;
+    }
+
+    public User getHeadMaster() {
+        return headMaster;
+    }
+
+    public void setHeadMaster(User headMaster) {
+        this.headMaster = headMaster;
     }
 }

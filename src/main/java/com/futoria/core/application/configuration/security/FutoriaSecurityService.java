@@ -1,16 +1,10 @@
 package com.futoria.core.application.configuration.security;
 
-import com.futoria.core.model.Permission;
-import com.futoria.core.model.Role;
-import com.futoria.core.model.User;
-import org.springframework.context.annotation.Bean;
-import org.springframework.security.core.GrantedAuthority;
+import com.futoria.core.model.security.Permission;
+import com.futoria.core.model.security.Role;
+import com.futoria.core.model.user.User;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
-
-import java.util.*;
 
 @Component("CoreSecurityService")
 public class FutoriaSecurityService {
@@ -38,12 +32,6 @@ public class FutoriaSecurityService {
                 .getAuthentication()
                 .getPrincipal())
                 .getUser();
-    }
-
-    // Beans
-    @Bean
-    public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
     }
 }
 

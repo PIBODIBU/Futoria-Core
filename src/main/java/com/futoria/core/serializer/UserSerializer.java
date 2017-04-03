@@ -1,7 +1,7 @@
 package com.futoria.core.serializer;
 
-import com.futoria.core.model.Role;
-import com.futoria.core.model.User;
+import com.futoria.core.model.security.Role;
+import com.futoria.core.model.user.User;
 import com.google.gson.*;
 
 import java.lang.reflect.Type;

@@ -1,4 +1,4 @@
-package com.futoria.core.model;
+package com.futoria.core.model.security;
 
 import javax.persistence.*;
 import java.util.Set;

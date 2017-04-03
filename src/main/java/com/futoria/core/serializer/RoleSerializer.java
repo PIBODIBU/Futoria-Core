@@ -1,6 +1,6 @@
 package com.futoria.core.serializer;
 
-import com.futoria.core.model.Role;
+import com.futoria.core.model.security.Role;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonSerializationContext;
